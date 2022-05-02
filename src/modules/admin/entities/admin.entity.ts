@@ -17,17 +17,17 @@ export class Admin extends BaseEntity {
   @Column({ type: 'varchar', length: 150, nullable: false })
   fullname: string;
 
-  @Column({ type: 'varchar', length: 150, nullable: false })
+  @Column({ type: 'varchar', length: 150, nullable: false, unique: true })
   username: string;
 
   @Column({ nullable: false })
   password: string;
 
   @Unique(['email'])
-  @Column({ nullable: true })
+  @Column({ nullable: false, unique: true })
   email: string;
 
-  @Column()
+  @Column({ nullable: true })
   avatar: string;
 
   @Column({ type: 'enum', enum: Gender, default: Gender.male })

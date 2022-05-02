@@ -30,6 +30,17 @@ export class AdminController {
     }
   }
 
+  @Post('signin')
+  login(@Body() data: any) {
+    try {
+      return this.adminService.login(data);
+    } catch (error) {
+      throw new HttpException(
+        'Internal Server Error.',
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
+  }
   // @Get()
   // findAll() {
   //   return 'admin';
