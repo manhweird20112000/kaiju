@@ -1,4 +1,11 @@
-import { forwardRef, Inject, Injectable } from '@nestjs/common';
+import { forwardRef, HttpStatus, Inject, Injectable } from '@nestjs/common';
+import {
+  ACCOUNT_NOT_EXIST,
+  CREATED,
+  EMAIL_ALREADY_IN_USE,
+  PASSWORD_FAIL,
+  SUCCESS,
+} from 'src/constants';
 import { BaseService } from 'src/utils/repository/base.service';
 import { AuthService } from '../auth/auth.service';
 import { Admin } from './entities/admin.entity';
@@ -29,7 +36,17 @@ export class AdminService extends BaseService<Admin, AdminRepository> {
         password: passwordHash,
       };
       const admin = await this.store(payload);
-      return { ...admin, password: null };
+      return {
+        data: { ...admin, password: null },
+        message: CREATED,
+        statusCode: HttpStatus.OK,
+      };
+    } else {
+      return {
+        data: null,
+        message: EMAIL_ALREADY_IN_USE,
+        statusCode: HttpStatus.OK,
+      };
     }
   }
 
@@ -47,9 +64,28 @@ export class AdminService extends BaseService<Admin, AdminRepository> {
           password: null,
         };
         const accessToken: string = await this.authService.generateJwt(payload);
-        console.log(accessToken);
-        return { ...payload, accessToken };
+        return {
+          data: { ...payload, accessToken },
+          message: SUCCESS,
+          statusCode: HttpStatus.OK,
+        };
+      } else {
+        return {
+          data: null,
+          message: PASSWORD_FAIL,
+          statusCode: HttpStatus.OK,
+        };
       }
+    } else {
+      return {
+        data: null,
+        message: ACCOUNT_NOT_EXIST,
+        statusCode: HttpStatus.OK,
+      };
     }
+  }
+
+  async list(query){
+    
   }
 }

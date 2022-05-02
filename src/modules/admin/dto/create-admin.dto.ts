@@ -1,4 +1,4 @@
-import { IsEmail, IsEnum, IsNotEmpty, IsString, Min } from 'class-validator';
+import { IsEmail, IsNotEmpty, IsString, Min } from 'class-validator';
 import { Gender } from 'src/constants';
 
 export class CreateAdminDto {
@@ -6,6 +6,7 @@ export class CreateAdminDto {
   @IsNotEmpty()
   fullname: string;
 
+  @IsNotEmpty()
   @IsEmail()
   email: string;
 

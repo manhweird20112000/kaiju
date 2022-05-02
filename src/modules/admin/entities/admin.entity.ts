@@ -1,9 +1,12 @@
 import { Gender, Status } from 'src/constants';
+import { Role } from 'src/modules/role/entities/role.entity';
 import {
   BaseEntity,
   Column,
   CreateDateColumn,
   Entity,
+  JoinTable,
+  ManyToMany,
   PrimaryGeneratedColumn,
   Unique,
   UpdateDateColumn,
@@ -23,7 +26,6 @@ export class Admin extends BaseEntity {
   @Column({ nullable: false })
   password: string;
 
-  @Unique(['email'])
   @Column({ nullable: false, unique: true })
   email: string;
 
@@ -35,6 +37,10 @@ export class Admin extends BaseEntity {
 
   @Column({ type: 'enum', enum: Status, default: Status.inactive })
   status: Status;
+
+  @ManyToMany((type) => Role)
+  @JoinTable({ name: 'admin_role' })
+  roles: Role[];
 
   @CreateDateColumn()
   createdAt: Date;

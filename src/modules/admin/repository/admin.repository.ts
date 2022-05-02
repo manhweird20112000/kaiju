@@ -1,3 +1,8 @@
+import {
+  IPaginationOptions,
+  paginate,
+  Pagination,
+} from 'nestjs-typeorm-paginate';
 import { EntityRepository, Repository } from 'typeorm';
 import { Admin } from '../entities/admin.entity';
 @EntityRepository(Admin)
@@ -8,5 +13,10 @@ export class AdminRepository extends Repository<Admin> {
 
   findOneByUserName(username: string): Promise<Admin> {
     return this.createQueryBuilder().where({ username: username }).getOne();
+  }
+
+  async paginate(options: IPaginationOptions): Promise<Pagination<Admin>> {
+    const query = this.createQueryBuilder();
+    return paginate<Admin>(query, options);
   }
 }

@@ -1,17 +1,16 @@
 import {
   Controller,
-  Get,
   Post,
   Body,
-  Patch,
-  Param,
-  Delete,
   HttpException,
-  HttpCode,
   HttpStatus,
+  Res,
 } from '@nestjs/common';
+import { Response } from 'express';
+import { ValidationPipe } from 'src/utils/validation/validation.service';
 import { AdminService } from './admin.service';
 import { CreateAdminDto } from './dto/create-admin.dto';
+import { LoginAdminDto } from './dto/login-admin.dto';
 import { UpdateAdminDto } from './dto/update-admin.dto';
 
 @Controller('admin')
@@ -19,9 +18,13 @@ export class AdminController {
   constructor(private readonly adminService: AdminService) {}
 
   @Post('save')
-  create(@Body() createAdminDto: CreateAdminDto) {
+  async create(
+    @Body(new ValidationPipe()) createAdminDto: CreateAdminDto,
+    @Res() res: Response,
+  ) {
     try {
-      return this.adminService.create(createAdminDto);
+      const data = await this.adminService.create(createAdminDto);
+      return res.status(HttpStatus.OK).json({ ...data });
     } catch (error) {
       throw new HttpException(
         'Internal Server Error.',
@@ -31,9 +34,13 @@ export class AdminController {
   }
 
   @Post('signin')
-  login(@Body() data: any) {
+  async login(
+    @Body(new ValidationPipe()) loginAdminDto: LoginAdminDto,
+    @Res() res: Response,
+  ) {
     try {
-      return this.adminService.login(data);
+      const data = await this.adminService.login(loginAdminDto);
+      return res.status(HttpStatus.OK).json({ ...data });
     } catch (error) {
       throw new HttpException(
         'Internal Server Error.',

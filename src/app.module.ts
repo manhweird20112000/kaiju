@@ -5,6 +5,9 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AdminHttpModule } from './modules/admin/admin-http.module';
 import { Admin } from './modules/admin/entities/admin.entity';
+import { RoleModule } from './modules/role/role.module';
+import { CategoryModule } from './modules/category/category.module';
+import { Role } from './modules/role/entities/role.entity';
 
 @Module({
   imports: [
@@ -16,10 +19,12 @@ import { Admin } from './modules/admin/entities/admin.entity';
       username: 'root',
       password: '',
       database: 'nest-ecommerce',
-      entities: [Admin],
+      entities: [Admin, Role],
       synchronize: true,
     }),
     AdminHttpModule,
+    RoleModule,
+    CategoryModule,
   ],
   controllers: [AppController],
   providers: [AppService],
