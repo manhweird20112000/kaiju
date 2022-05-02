@@ -5,6 +5,7 @@ import {
   CreateDateColumn,
   Entity,
   PrimaryGeneratedColumn,
+  Unique,
   UpdateDateColumn,
 } from 'typeorm';
 
@@ -13,22 +14,26 @@ export class Admin extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ type: 'varchar', length: 150 })
+  @Column({ type: 'varchar', length: 150, nullable: false })
   fullname: string;
 
-  @Column({ type: 'varchar', length: 150 })
+  @Column({ type: 'varchar', length: 150, nullable: false })
   username: string;
 
-  @Column()
+  @Column({ nullable: false })
   password: string;
+
+  @Unique(['email'])
+  @Column({ nullable: true })
+  email: string;
 
   @Column()
   avatar: string;
 
-  @Column({ type: 'enum', enum: Gender })
+  @Column({ type: 'enum', enum: Gender, default: Gender.male })
   gender: Gender;
 
-  @Column({ type: 'enum', enum: Status })
+  @Column({ type: 'enum', enum: Status, default: Status.inactive })
   status: Status;
 
   @CreateDateColumn()

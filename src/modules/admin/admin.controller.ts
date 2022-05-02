@@ -6,6 +6,9 @@ import {
   Patch,
   Param,
   Delete,
+  HttpException,
+  HttpCode,
+  HttpStatus,
 } from '@nestjs/common';
 import { AdminService } from './admin.service';
 import { CreateAdminDto } from './dto/create-admin.dto';
@@ -15,14 +18,21 @@ import { UpdateAdminDto } from './dto/update-admin.dto';
 export class AdminController {
   constructor(private readonly adminService: AdminService) {}
 
-  // @Post()
-  // create(@Body() createAdminDto: CreateAdminDto) {
-  //   return this.adminService.create(createAdminDto);
-  // }
+  @Post('save')
+  create(@Body() createAdminDto: CreateAdminDto) {
+    try {
+      return this.adminService.create(createAdminDto);
+    } catch (error) {
+      throw new HttpException(
+        'Internal Server Error.',
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
+  }
 
   // @Get()
   // findAll() {
-  //   return this.adminService.findAll();
+  //   return 'admin';
   // }
 
   // @Get(':id')

@@ -1,10 +1,13 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable, forwardRef } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import bcrypt from 'bcrypt';
 
 @Injectable()
 export class AuthService {
-  constructor(private jwtService: JwtService) {}
+  constructor(
+    @Inject(forwardRef(() => JwtService))
+    private jwtService: JwtService,
+  ) {}
 
   async generateJwt(data: any): Promise<string> {
     return this.jwtService.signAsync(data);
