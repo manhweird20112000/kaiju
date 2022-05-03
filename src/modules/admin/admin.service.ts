@@ -4,6 +4,7 @@ import {
   CREATED,
   EMAIL_ALREADY_IN_USE,
   PASSWORD_FAIL,
+  PASSWORD_NOT_SAME,
   Status,
   SUCCESS,
 } from 'src/constants';
@@ -105,5 +106,38 @@ export class AdminService extends BaseService<Admin, AdminRepository> {
       message: SUCCESS,
       statusCode: HttpStatus.OK,
     };
+  }
+
+  async changePassword(guard, data) {
+    const { id } = guard;
+    const { password, passwordConfirm, oldPassword } = data;
+    const user = await this.repository.findOne({ where: { id: id } });
+    const isVerifyPassword = await this.authService.comparePassword(
+      oldPassword,
+      user.password,
+    );
+    if (isVerifyPassword) {
+      if (password === passwordConfirm) {
+        const passwordHash = await this.authService.hashPassword(password);
+        await this.repository.update(id, { password: passwordHash });
+        return {
+          data: { ...user, password: null },
+          message: SUCCESS,
+          statusCode: HttpStatus.OK,
+        };
+      } else {
+        return {
+          data: null,
+          message: PASSWORD_NOT_SAME,
+          statusCode: HttpStatus.OK,
+        };
+      }
+    } else {
+      return {
+        data: null,
+        message: PASSWORD_FAIL,
+        statusCode: HttpStatus.OK,
+      };
+    }
   }
 }

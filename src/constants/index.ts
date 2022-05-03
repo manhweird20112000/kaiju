@@ -13,3 +13,4 @@ export const EMAIL_ALREADY_IN_USE = 'Email already in use.';
 export const ACCOUNT_NOT_EXIST = 'Account not exist.';
 export const PASSWORD_FAIL = 'Password fail.';
 export const SUCCESS = 'Successfully.';
+export const PASSWORD_NOT_SAME = 'Passwords are not the same.';

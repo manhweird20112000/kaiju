@@ -17,6 +17,7 @@ import { Request, Response } from 'express';
 import { ValidationPipe } from 'src/utils/validation/validation.service';
 import { JwtAuthGuard } from '../auth/guards/jwt.guard';
 import { AdminService } from './admin.service';
+import { ChangePasswordAdminDto } from './dto/change-password.dto';
 import { CreateAdminDto } from './dto/create-admin.dto';
 import { LoginAdminDto } from './dto/login-admin.dto';
 
@@ -77,10 +78,19 @@ export class AdminController {
     }
   }
 
+  @UseGuards(JwtAuthGuard)
   @Patch('change-password')
-  changePassword(@Res() res: Response) {
+  async changePassword(
+    @Res() res: Response,
+    @Req() req: Request,
+    @Body(new ValidationPipe()) changePasswordAdminDto: ChangePasswordAdminDto,
+  ) {
     try {
-      return res.status(HttpStatus.OK).json({});
+      const data = await this.adminService.changePassword(
+        req.user,
+        changePasswordAdminDto,
+      );
+      return res.status(HttpStatus.OK).json({ ...data });
     } catch (error) {
       throw new HttpException(
         'Internal Server Error.',
