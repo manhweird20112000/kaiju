@@ -85,7 +85,13 @@ export class AdminService extends BaseService<Admin, AdminRepository> {
     }
   }
 
-  async list(query){
-    
+  async list(query) {
+    const { limit, page, ...params } = query;
+    const data = await this.repository.paginate(params, { limit, page });
+    return {
+      data: { ...data },
+      message: SUCCESS,
+      statusCode: HttpStatus.OK,
+    };
   }
 }

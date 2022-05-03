@@ -15,8 +15,30 @@ export class AdminRepository extends Repository<Admin> {
     return this.createQueryBuilder().where({ username: username }).getOne();
   }
 
-  async paginate(options: IPaginationOptions): Promise<Pagination<Admin>> {
-    const query = this.createQueryBuilder();
+  async paginate(
+    params: any,
+    options: IPaginationOptions,
+  ): Promise<Pagination<Admin>> {
+    let query = this.createQueryBuilder('admin').select([
+      'admin.fullname',
+      'admin.username',
+      'admin.gender',
+      'admin.avatar',
+      'admin.status',
+      'admin.createdAt',
+    ]);
+
+    if ('search' in params) {
+      const { search } = params;
+      query = query.where(
+        'concat(admin.fullname, admin.email,admin.username) like :search',
+        {
+          search: `%${search}%`,
+        },
+      );
+    }
+
+    query = query.orderBy('admin.id', 'DESC');
     return paginate<Admin>(query, options);
   }
 }
