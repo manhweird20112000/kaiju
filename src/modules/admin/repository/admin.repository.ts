@@ -3,6 +3,7 @@ import {
   paginate,
   Pagination,
 } from 'nestjs-typeorm-paginate';
+import { Status } from 'src/constants';
 import { EntityRepository, Repository } from 'typeorm';
 import { Admin } from '../entities/admin.entity';
 @EntityRepository(Admin)
@@ -19,14 +20,17 @@ export class AdminRepository extends Repository<Admin> {
     params: any,
     options: IPaginationOptions,
   ): Promise<Pagination<Admin>> {
-    let query = this.createQueryBuilder('admin').select([
-      'admin.fullname',
-      'admin.username',
-      'admin.gender',
-      'admin.avatar',
-      'admin.status',
-      'admin.createdAt',
-    ]);
+    let query = this.createQueryBuilder('admin')
+      .select([
+        'admin.fullname',
+        'admin.username',
+        'admin.gender',
+        'admin.avatar',
+        'admin.status',
+        'admin.lastLogin',
+        'admin.createdAt',
+      ])
+      .where('admin.status = :status', { status: Status.active });
 
     if ('search' in params) {
       const { search } = params;

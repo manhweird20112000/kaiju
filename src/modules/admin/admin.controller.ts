@@ -11,6 +11,7 @@ import {
   DefaultValuePipe,
   ParseIntPipe,
   Req,
+  Patch,
 } from '@nestjs/common';
 import { Request, Response } from 'express';
 import { ValidationPipe } from 'src/utils/validation/validation.service';
@@ -49,12 +50,15 @@ export class AdminController {
       const data = await this.adminService.login(loginAdminDto);
       return res.status(HttpStatus.OK).json({ ...data });
     } catch (error) {
+      console.log(error);
       throw new HttpException(
         'Internal Server Error.',
         HttpStatus.INTERNAL_SERVER_ERROR,
       );
     }
   }
+
+  @UseGuards(JwtAuthGuard)
   @Get('list')
   async findAll(
     @Query('page', new DefaultValuePipe(1), ParseIntPipe) page: number = 1,
@@ -64,7 +68,6 @@ export class AdminController {
   ) {
     try {
       const data = await this.adminService.list({ ...req.query, page, limit });
-
       return res.status(HttpStatus.OK).json({ ...data });
     } catch (error) {
       throw new HttpException(
@@ -74,18 +77,15 @@ export class AdminController {
     }
   }
 
-  // @Get(':id')
-  // findOne(@Param('id') id: string) {
-  //   return this.adminService.findOne(+id);
-  // }
-
-  // @Patch(':id')
-  // update(@Param('id') id: string, @Body() updateAdminDto: UpdateAdminDto) {
-  //   return this.adminService.update(+id, updateAdminDto);
-  // }
-
-  // @Delete(':id')
-  // remove(@Param('id') id: string) {
-  //   return this.adminService.remove(+id);
-  // }
+  @Patch('change-password')
+  changePassword(@Res() res: Response) {
+    try {
+      return res.status(HttpStatus.OK).json({});
+    } catch (error) {
+      throw new HttpException(
+        'Internal Server Error.',
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
+  }
 }

@@ -42,6 +42,9 @@ export class Admin extends BaseEntity {
   @JoinTable({ name: 'admin_role' })
   roles: Role[];
 
+  @Column({ type: 'bigint', nullable: true })
+  lastLogin: number;
+
   @CreateDateColumn()
   createdAt: Date;
 

@@ -4,12 +4,14 @@ import {
   CREATED,
   EMAIL_ALREADY_IN_USE,
   PASSWORD_FAIL,
+  Status,
   SUCCESS,
 } from 'src/constants';
 import { BaseService } from 'src/utils/repository/base.service';
 import { AuthService } from '../auth/auth.service';
 import { Admin } from './entities/admin.entity';
 import { AdminRepository } from './repository/admin.repository';
+import moment from 'moment';
 
 @Injectable()
 export class AdminService extends BaseService<Admin, AdminRepository> {
@@ -62,8 +64,18 @@ export class AdminService extends BaseService<Admin, AdminRepository> {
         const payload = {
           ...exist,
           password: null,
+          status: Status.active,
         };
+
+        if (payload.lastLogin === null) {
+          await this.repository.update(exist.id, {
+            status: Status.active,
+            lastLogin: new Date().getTime(),
+          });
+        }
+
         const accessToken: string = await this.authService.generateJwt(payload);
+
         return {
           data: { ...payload, accessToken },
           message: SUCCESS,
