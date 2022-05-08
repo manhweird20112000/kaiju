@@ -8,6 +8,9 @@ import { Admin } from './modules/admin/entities/admin.entity';
 import { RoleModule } from './modules/role/role.module';
 import { CategoryModule } from './modules/category/category.module';
 import { Role } from './modules/role/entities/role.entity';
+import { MediaModule } from './modules/media/media.module';
+import { Media } from './modules/media/entities/media.entity';
+import { MediaHttpModule } from './modules/media/media-http.module';
 
 @Module({
   imports: [
@@ -19,12 +22,11 @@ import { Role } from './modules/role/entities/role.entity';
       username: 'root',
       password: '',
       database: 'nest-ecommerce',
-      entities: [Admin, Role],
+      entities: [Media, Admin, Role],
       synchronize: true,
     }),
     AdminHttpModule,
-    RoleModule,
-    CategoryModule,
+    MediaHttpModule,
   ],
   controllers: [AppController],
   providers: [AppService],

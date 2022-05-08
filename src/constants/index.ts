@@ -8,6 +8,13 @@ export enum Status {
   inactive = 'inactive',
 }
 
+export enum TypeMedia {
+  image = 'image',
+  file = 'file',
+  audio = 'audio',
+  video = 'video',
+}
+
 export const CREATED = 'Created.';
 export const EMAIL_ALREADY_IN_USE = 'Email already in use.';
 export const ACCOUNT_NOT_EXIST = 'Account not exist.';
