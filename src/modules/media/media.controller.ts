@@ -8,9 +8,13 @@ import {
   Delete,
   UseInterceptors,
   UploadedFile,
+  HttpException,
+  HttpStatus,
+  Res,
 } from '@nestjs/common';
 import { MediaService } from './media.service';
 import { FileInterceptor } from '@nestjs/platform-express';
+import { Response } from 'express';
 
 @Controller('media')
 export class MediaController {
@@ -18,7 +22,18 @@ export class MediaController {
 
   @Post('store')
   @UseInterceptors(FileInterceptor('file'))
-  create(@UploadedFile() file: Express.Multer.File) {
-    console.log(file);
+  async sigleUploadFile(
+    @UploadedFile() file: Express.Multer.File,
+    @Res() res: Response,
+  ) {
+    try {
+      const data = await this.mediaService.sigleFileUpload(file);
+      return res.status(HttpStatus.OK).json({ ...data });
+    } catch (error) {
+      throw new HttpException(
+        'Internal Server Error.',
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
   }
 }

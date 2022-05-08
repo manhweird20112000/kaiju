@@ -1,26 +1,26 @@
-import { Injectable } from '@nestjs/common';
-import { CreateMediaDto } from './dto/create-media.dto';
-import { UpdateMediaDto } from './dto/update-media.dto';
+import { HttpStatus, Injectable } from '@nestjs/common';
+import { SUCCESS } from 'src/constants';
+import { BaseService } from 'src/utils/repository/base.service';
+import { Media } from './entities/media.entity';
+import { MediaRepository } from './repository/media.repository';
 
 @Injectable()
-export class MediaService {
-  create(createMediaDto: CreateMediaDto) {
-    return 'This action adds a new media';
+export class MediaService extends BaseService<Media, MediaRepository> {
+  constructor(repository: MediaRepository) {
+    super(repository);
   }
 
-  findAll() {
-    return `This action returns all media`;
-  }
-
-  findOne(id: number) {
-    return `This action returns a #${id} media`;
-  }
-
-  update(id: number, updateMediaDto: UpdateMediaDto) {
-    return `This action updates a #${id} media`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} media`;
+  async sigleFileUpload(data) {
+    const { mimetype, filename, size, path, type = 'image' } = data;
+    const ext = mimetype.split('/')[1];
+    const payload = {
+      name: filename + '.' + ext,
+      type,
+      size,
+      ext: mimetype,
+      path: path + '.' + ext,
+    };
+    await this.repository.save(payload);
+    return { data: payload, statusCode: HttpStatus.OK, message: SUCCESS };
   }
 }

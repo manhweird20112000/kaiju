@@ -25,12 +25,6 @@ export class Media extends BaseEntity {
   @Column({ type: 'double' })
   size: number;
 
-  @Column({ type: 'int' })
-  width: number;
-
-  @Column({ type: 'int' })
-  height: number;
-
   @Column({ type: 'enum', enum: TypeMedia, nullable: true })
   type: TypeMedia;
 
