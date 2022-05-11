@@ -23,4 +23,6 @@ export class MediaService extends BaseService<Media, MediaRepository> {
     await this.repository.save(payload);
     return { data: payload, statusCode: HttpStatus.OK, message: SUCCESS };
   }
+
+  
 }

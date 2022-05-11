@@ -22,6 +22,12 @@ export class Role extends BaseEntity {
   @Column({ type: 'enum', enum: Status, default: Status.active })
   status: Gender;
 
+  @Column({ type: 'int', default: 5 })
+  level: number;
+
+  @Column()
+  description: string;
+
   @ManyToMany((type) => Admin)
   @JoinTable({ name: 'admin_role' })
   admins: Admin[];

@@ -62,8 +62,8 @@ export class AdminController {
   @UseGuards(JwtAuthGuard)
   @Get('list')
   async findAll(
-    @Query('page', new DefaultValuePipe(1), ParseIntPipe) page: number = 1,
-    @Query('limit', new DefaultValuePipe(1), ParseIntPipe) limit: number = 10,
+    @Query('page', new DefaultValuePipe(1), ParseIntPipe) page: number,
+    @Query('limit', new DefaultValuePipe(10), ParseIntPipe) limit: number,
     @Req() req: Request,
     @Res() res: Response,
   ) {

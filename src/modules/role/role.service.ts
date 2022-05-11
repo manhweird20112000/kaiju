@@ -1,26 +1,46 @@
-import { Injectable } from '@nestjs/common';
-import { CreateRoleDto } from './dto/create-role.dto';
-import { UpdateRoleDto } from './dto/update-role.dto';
+import { HttpStatus, Injectable } from '@nestjs/common';
+import { NOT_FOUND, SUCCESS } from 'src/constants';
+import { BaseService } from 'src/utils/repository/base.service';
+import { Role } from './entities/role.entity';
+import { RoleRepository } from './repository/role.repository';
 
 @Injectable()
-export class RoleService {
-  create(createRoleDto: CreateRoleDto) {
-    return 'This action adds a new role';
+export class RoleService extends BaseService<Role, RoleRepository> {
+  constructor(repository: RoleRepository) {
+    super(repository);
   }
 
-  findAll() {
-    return `This action returns all role`;
+  async create(data) {
+    await this.repository.save(data);
+    return { data: data, message: SUCCESS, statusCode: HttpStatus.OK };
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} role`;
+  async updateRole(id, data) {
+    const exist = await this.repository.findOne(id);
+    console.log(exist);
+    if (!exist) {
+      return {
+        data: null,
+        message: NOT_FOUND,
+        statusCode: HttpStatus.NOT_FOUND,
+      };
+    } else {
+      await this.repository.update(id, data);
+      return {
+        data,
+        message: SUCCESS,
+        statusCode: HttpStatus.OK,
+      };
+    }
   }
 
-  update(id: number, updateRoleDto: UpdateRoleDto) {
-    return `This action updates a #${id} role`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} role`;
+  async list(query) {
+    const { limit, page, ...params } = query;
+    const data = await this.repository.paginate(params, { limit, page });
+    return {
+      data: { ...data },
+      message: SUCCESS,
+      statusCode: HttpStatus.OK,
+    };
   }
 }

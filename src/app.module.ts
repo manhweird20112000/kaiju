@@ -5,12 +5,10 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AdminHttpModule } from './modules/admin/admin-http.module';
 import { Admin } from './modules/admin/entities/admin.entity';
-import { RoleModule } from './modules/role/role.module';
-import { CategoryModule } from './modules/category/category.module';
 import { Role } from './modules/role/entities/role.entity';
-import { MediaModule } from './modules/media/media.module';
 import { Media } from './modules/media/entities/media.entity';
 import { MediaHttpModule } from './modules/media/media-http.module';
+import { RoleHttpModule } from './modules/role/role-http.module';
 
 @Module({
   imports: [
@@ -27,6 +25,7 @@ import { MediaHttpModule } from './modules/media/media-http.module';
     }),
     AdminHttpModule,
     MediaHttpModule,
+    RoleHttpModule,
   ],
   controllers: [AppController],
   providers: [AppService],
