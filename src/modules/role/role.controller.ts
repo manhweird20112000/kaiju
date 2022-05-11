@@ -2,6 +2,7 @@ import {
   Body,
   Controller,
   DefaultValuePipe,
+  Delete,
   Get,
   HttpException,
   HttpStatus,
@@ -67,7 +68,30 @@ export class RoleController {
   }
 
   @Get('detail/:id')
-  detail() {}
+  async detail(@Param('id') id: number, @Res() res: Response) {
+    try {
+      const data: ResponseHttpType = await this.roleService.edit(id);
+      return res.status(HttpStatus.OK).json({ ...data });
+    } catch (error) {
+      throw new HttpException(
+        'Internal Server Error.',
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
+  }
+
+  @Delete('delete/:id')
+  async delete(@Param('id') id: number, @Res() res: Response) {
+    try {
+      const data: ResponseHttpType = await this.roleService.deleteRole(id);
+      return res.status(HttpStatus.OK).json({ ...data });
+    } catch (error) {
+      throw new HttpException(
+        'Internal Server Error.',
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
+  }
 
   @Get('list')
   async findAll(
