@@ -67,6 +67,7 @@ export class RoleController {
     }
   }
 
+  @UseGuards(JwtAuthGuard)
   @Get('detail/:id')
   async detail(@Param('id') id: number, @Res() res: Response) {
     try {
@@ -80,6 +81,7 @@ export class RoleController {
     }
   }
 
+  @UseGuards(JwtAuthGuard)
   @Delete('delete/:id')
   async delete(@Param('id') id: number, @Res() res: Response) {
     try {

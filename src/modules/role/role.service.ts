@@ -64,7 +64,7 @@ export class RoleService extends BaseService<Role, RoleRepository> {
 
   async list(query) {
     const { limit, page, ...params } = query;
-    const data = await this.repository.paginate(params, { limit, page });
+    const data = await this.repository.list(params, { limit, page });
     return {
       data: { ...data },
       message: SUCCESS,

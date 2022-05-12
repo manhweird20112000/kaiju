@@ -8,15 +8,15 @@ import { Role } from '../entities/role.entity';
 
 @EntityRepository(Role)
 export class RoleRepository extends Repository<Role> {
-  async paginate(
+  async list(
     params: any,
     options: IPaginationOptions,
   ): Promise<Pagination<Role>> {
     let query = this.createQueryBuilder('role').select([
-      'role.name as name',
-      'role.description as description',
-      'role.status as status',
-      'role.level as level',
+      'role.name',
+      'role.description',
+      'role.status',
+      'role.level',
     ]);
 
     if ('status' in params) {
