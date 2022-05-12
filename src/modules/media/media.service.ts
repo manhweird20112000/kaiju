@@ -18,11 +18,9 @@ export class MediaService extends BaseService<Media, MediaRepository> {
       type,
       size,
       ext: mimetype,
-      path: path + '.' + ext,
+      path,
     };
     await this.repository.save(payload);
     return { data: payload, statusCode: HttpStatus.OK, message: SUCCESS };
   }
-
-  
 }
