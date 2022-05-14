@@ -16,6 +16,9 @@ export class Category extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
+  @Column({ nullable: true })
+  parentId: number;
+
   @Column({ length: 150 })
   name: string;
 

@@ -17,6 +17,7 @@ export class CategoryRepository extends Repository<Category> {
       'category.status',
       'category.description',
       'category.avatar',
+      'category.parentId',
     ]);
 
     if ('search' in params) {

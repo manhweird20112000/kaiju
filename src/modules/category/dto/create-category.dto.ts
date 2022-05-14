@@ -1,4 +1,4 @@
-import { IsEnum, IsNotEmpty, IsString } from 'class-validator';
+import { IsEmpty, IsEnum, IsNotEmpty, IsString } from 'class-validator';
 import { Status } from 'src/constants';
 
 export class CreateCategoryDto {
@@ -11,4 +11,7 @@ export class CreateCategoryDto {
 
   @IsEnum(Status)
   status: Status;
+
+  @IsEmpty()
+  parentId: number;
 }
