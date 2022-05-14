@@ -4,6 +4,7 @@ import {
   BaseEntity,
   Column,
   CreateDateColumn,
+  DeleteDateColumn,
   Entity,
   JoinTable,
   ManyToMany,
@@ -50,4 +51,7 @@ export class Admin extends BaseEntity {
 
   @UpdateDateColumn()
   updateAt: Date;
+
+  @DeleteDateColumn()
+  deletedAt: Date;
 }

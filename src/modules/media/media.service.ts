@@ -23,4 +23,11 @@ export class MediaService extends BaseService<Media, MediaRepository> {
     await this.repository.save(payload);
     return { data: payload, statusCode: HttpStatus.OK, message: SUCCESS };
   }
+
+  async findMedia(id: number) {
+    const exist: Media = await this.repository.findOne(id);
+    if (exist) {
+      return exist;
+    }
+  }
 }
