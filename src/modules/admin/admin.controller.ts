@@ -14,6 +14,7 @@ import {
   Patch,
 } from '@nestjs/common';
 import { Request, Response } from 'express';
+import { EmailService } from 'src/utils/email/email.service';
 import { ValidationPipe } from 'src/utils/validation/validation.service';
 import { JwtAuthGuard } from '../auth/guards/jwt.guard';
 import { AdminService } from './admin.service';
@@ -23,7 +24,10 @@ import { LoginAdminDto } from './dto/login-admin.dto';
 
 @Controller('admin')
 export class AdminController {
-  constructor(private readonly adminService: AdminService) {}
+  constructor(
+    private readonly adminService: AdminService,
+    private readonly emailService: EmailService,
+  ) {}
 
   // @UseGuards(JwtAuthGuard)
   @Post('save')
@@ -51,7 +55,6 @@ export class AdminController {
       const data = await this.adminService.login(loginAdminDto);
       return res.status(HttpStatus.OK).json({ ...data });
     } catch (error) {
-      console.log(error);
       throw new HttpException(
         'Internal Server Error.',
         HttpStatus.INTERNAL_SERVER_ERROR,
@@ -98,4 +101,5 @@ export class AdminController {
       );
     }
   }
+
 }
