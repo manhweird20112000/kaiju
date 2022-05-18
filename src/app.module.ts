@@ -15,6 +15,7 @@ import { TagHttpModule } from './modules/tag/tag-http.module';
 import { Tag } from './modules/tag/entities/tag.entity';
 import { ProductHttpModule } from './modules/product/product-http.module';
 import { Product } from './modules/product/entities/product.entity';
+import { SocketModule } from './utils/socket/socket.module';
 
 @Module({
   imports: [
@@ -29,6 +30,7 @@ import { Product } from './modules/product/entities/product.entity';
       entities: [Media, Admin, Role, Category, Tag, Product],
       synchronize: true,
     }),
+    SocketModule,
     AdminHttpModule,
     MediaHttpModule,
     RoleHttpModule,
