@@ -16,6 +16,7 @@ import { Tag } from './modules/tag/entities/tag.entity';
 import { ProductHttpModule } from './modules/product/product-http.module';
 import { Product } from './modules/product/entities/product.entity';
 import { SocketModule } from './utils/socket/socket.module';
+import { LoggerWinstonModule } from './utils/logger/logger.module';
 
 @Module({
   imports: [
@@ -30,6 +31,7 @@ import { SocketModule } from './utils/socket/socket.module';
       entities: [Media, Admin, Role, Category, Tag, Product],
       synchronize: true,
     }),
+    LoggerWinstonModule,
     SocketModule,
     AdminHttpModule,
     MediaHttpModule,
