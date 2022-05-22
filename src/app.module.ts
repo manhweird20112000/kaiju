@@ -17,6 +17,7 @@ import { ProductHttpModule } from './modules/product/product-http.module';
 import { Product } from './modules/product/entities/product.entity';
 import { SocketModule } from './utils/socket/socket.module';
 import { LoggerWinstonModule } from './utils/logger/logger.module';
+import { QuecesModule } from './utils/queces/quece.module';
 
 @Module({
   imports: [
@@ -32,6 +33,7 @@ import { LoggerWinstonModule } from './utils/logger/logger.module';
       synchronize: true,
     }),
     LoggerWinstonModule,
+    QuecesModule,
     SocketModule,
     AdminHttpModule,
     MediaHttpModule,
