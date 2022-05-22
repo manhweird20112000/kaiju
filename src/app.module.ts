@@ -16,6 +16,7 @@ import { Tag } from './modules/tag/entities/tag.entity';
 import { ProductHttpModule } from './modules/product/product-http.module';
 import { Product } from './modules/product/entities/product.entity';
 import { SocketModule } from './utils/socket/socket.module';
+import { LogService } from './utils/logger/log.service';
 
 @Module({
   imports: [
@@ -26,7 +27,7 @@ import { SocketModule } from './utils/socket/socket.module';
       port: 3306,
       username: 'root',
       password: '',
-      database: 'nest-ecommerce',
+      database: 'ecommerce',
       entities: [Media, Admin, Role, Category, Tag, Product],
       synchronize: true,
     }),
@@ -39,6 +40,6 @@ import { SocketModule } from './utils/socket/socket.module';
     ProductHttpModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, LogService],
 })
 export class AppModule {}
