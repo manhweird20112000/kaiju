@@ -53,7 +53,8 @@
     "socket.io": "^4.5.0",
     "typeorm": "0.2",
     "uuid": "^8.3.2",
-    "winston": "^3.7.2"
+    "winston": "^3.7.2",
+    "winston-daily-rotate-file": "^4.6.1"
   },
   "devDependencies": {
     "@nestjs/cli": "^8.0.0",

@@ -16,7 +16,6 @@ import { Tag } from './modules/tag/entities/tag.entity';
 import { ProductHttpModule } from './modules/product/product-http.module';
 import { Product } from './modules/product/entities/product.entity';
 import { SocketModule } from './utils/socket/socket.module';
-import { LogService } from './utils/logger/log.service';
 
 @Module({
   imports: [
@@ -40,6 +39,6 @@ import { LogService } from './utils/logger/log.service';
     ProductHttpModule,
   ],
   controllers: [AppController],
-  providers: [AppService, LogService],
+  providers: [AppService],
 })
 export class AppModule {}

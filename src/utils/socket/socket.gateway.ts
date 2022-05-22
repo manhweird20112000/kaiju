@@ -7,15 +7,12 @@ import {
   WebSocketServer,
 } from '@nestjs/websockets';
 import { Server } from 'socket.io';
-import { LogService } from '../logger/log.service';
 
 @WebSocketGateway({ cors: { origin: '*' } })
 export class SocketGateway
   implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect
 {
   @WebSocketServer() server: Server;
-
-  constructor(private readonly logService: LogService) {}
 
   handleDisconnect(client: any) {
     console.log('client dissconnect');
