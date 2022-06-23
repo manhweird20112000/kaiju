@@ -15,6 +15,12 @@ export enum TypeMedia {
   video = 'video',
 }
 
+export enum TypeAuth {
+  facebook = 'facebook',
+  google = 'google',
+  normal = "normal",
+}
+
 export interface ResponseHttpType {
   data: any;
   message: string;

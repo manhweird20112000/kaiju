@@ -21,7 +21,7 @@ export class Role extends BaseEntity {
   name: string;
 
   @Column({ type: 'enum', enum: Status, default: Status.active })
-  status: Gender;
+  status: Status;
 
   @Column({ type: 'int', default: 5 })
   level: number;

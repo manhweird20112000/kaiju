@@ -9,6 +9,7 @@ import { SocketModule } from './utils/socket/socket.module';
 import { LoggerWinstonModule } from './utils/logger/logger.module';
 import { QuecesModule } from './utils/queces/quece.module';
 import { DatabaseModule } from './configs/database/database.module';
+import { UserHttpModule } from './modules/user/user-http.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { DatabaseModule } from './configs/database/database.module';
     AdminHttpModule,
     MediaHttpModule,
     RoleHttpModule,
+    UserHttpModule,
   ],
   controllers: [AppController],
   providers: [AppService],
