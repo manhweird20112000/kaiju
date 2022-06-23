@@ -66,6 +66,9 @@ export class User extends BaseEntity {
   })
   isOnline: Status;
 
+  @Column({ collation: 'Khu vực', nullable: false })
+  area: number;
+
   @Column({ comment: 'Lần đăng nhập gần nhất', nullable: true })
   lastLoginAt: Date;
 

@@ -5,9 +5,11 @@ import { Media } from 'src/modules/media/entities/media.entity';
 import { Admin } from 'src/modules/admin/entities/admin.entity';
 import { Role } from 'src/modules/role/entities/role.entity';
 import { User } from 'src/modules/user/entities/user.entity';
+import { MongooseModule } from '@nestjs/mongoose';
 
 @Module({
   imports: [
+    // MongooseModule.forFeature(''),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
       useFactory: async (configService: ConfigService) => ({
