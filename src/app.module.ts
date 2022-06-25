@@ -10,6 +10,8 @@ import { LoggerWinstonModule } from './utils/logger/logger.module';
 import { QuecesModule } from './utils/queces/quece.module';
 import { DatabaseModule } from './configs/database/database.module';
 import { UserHttpModule } from './modules/user/user-http.module';
+import { InvitationHttpModule } from './modules/invitation/invitation-http.module';
+import { RoomModule } from './modules/room/room.module';
 
 @Module({
   imports: [
@@ -22,6 +24,8 @@ import { UserHttpModule } from './modules/user/user-http.module';
     MediaHttpModule,
     RoleHttpModule,
     UserHttpModule,
+    InvitationHttpModule,
+    RoomModule
   ],
   controllers: [AppController],
   providers: [AppService],

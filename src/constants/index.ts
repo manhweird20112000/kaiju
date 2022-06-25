@@ -18,13 +18,29 @@ export enum TypeMedia {
 export enum TypeAuth {
   facebook = 'facebook',
   google = 'google',
-  normal = "normal",
+  normal = 'normal',
+}
+
+export enum TypeRequest {
+  agree = 'agree',
+  cancel = 'cancel',
+  request = 'request',
+}
+
+export enum TypeRoom {
+  group = 'group',
+  user = 'user',
 }
 
 export interface ResponseHttpType {
   data: any;
   message: string;
   statusCode: number;
+}
+
+export interface UserInRoomType {
+  id: number;
+  nickname: string | null;
 }
 
 export const CREATED = 'Created.';

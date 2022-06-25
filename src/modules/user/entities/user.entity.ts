@@ -1,10 +1,12 @@
 import { Gender, Status, TypeAuth } from 'src/constants';
+import { Invitation } from 'src/modules/invitation/entities/invitation.entity';
 import {
   BaseEntity,
   Column,
   CreateDateColumn,
   DeleteDateColumn,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -66,11 +68,17 @@ export class User extends BaseEntity {
   })
   isOnline: Status;
 
-  @Column({ collation: 'Khu vực', nullable: false })
+  @Column({ comment: 'Khu vực', nullable: false })
   area: number;
+
+  @Column({ comment: 'Token firebase', nullable: true })
+  token: string;
 
   @Column({ comment: 'Lần đăng nhập gần nhất', nullable: true })
   lastLoginAt: Date;
+
+  @OneToMany(() => Invitation, (invidation) => invidation.id)
+  invidation: [];
 
   @CreateDateColumn()
   createdAt: Date;
