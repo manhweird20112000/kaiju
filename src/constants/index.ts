@@ -13,6 +13,8 @@ export enum TypeMedia {
   file = 'file',
   audio = 'audio',
   video = 'video',
+  link = 'link',
+  text = 'text',
 }
 
 export enum TypeAuth {

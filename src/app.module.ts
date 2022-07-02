@@ -11,7 +11,7 @@ import { QuecesModule } from './utils/queces/quece.module';
 import { DatabaseModule } from './configs/database/database.module';
 import { UserHttpModule } from './modules/user/user-http.module';
 import { InvitationHttpModule } from './modules/invitation/invitation-http.module';
-import { RoomModule } from './modules/room/room.module';
+import { OtpHttpModule } from './modules/otp/otp-http.module';
 
 @Module({
   imports: [
@@ -25,7 +25,7 @@ import { RoomModule } from './modules/room/room.module';
     RoleHttpModule,
     UserHttpModule,
     InvitationHttpModule,
-    RoomModule
+    OtpHttpModule,
   ],
   controllers: [AppController],
   providers: [AppService],

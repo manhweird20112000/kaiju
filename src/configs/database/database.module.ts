@@ -10,20 +10,22 @@ import { Invitation } from 'src/modules/invitation/entities/invitation.entity';
 
 @Module({
   imports: [
-    MongooseModule.forRootAsync({
-      imports: [ConfigModule],
-      useFactory: async (configService: ConfigService) => ({
-        uri: `mongodb+srv://${configService.get(
-          'MONGO_USER',
-        )}:${configService.get(
-          'MONGO_PASSWORD',
-        )}@cluster0.jvfd20n.mongodb.net/?retryWrites=true&w=majority`,
-        useNewUrlParser: true,
-        useFindAndModify: false,
-        useCreateIndex: true,
-        useUnifiedTopology: true,
-      }),
-    }),
+    MongooseModule.forRoot('mongodb://localhost:27017/kaiju'),
+    // MongooseModule.forRootAsync({
+    //   imports: [ConfigModule],
+    //   useFactory: async (configService: ConfigService) => ({
+    //     uri: `mongodb+srv://${configService.get(
+    //       'MONGO_USER',
+    //     )}:${configService.get(
+    //       'MONGO_PASSWORD',
+    //     )}@cluster0.jvfd20n.mongodb.net/kaiju?retryWrites=true&w=majority`,
+    //     useNewUrlParser: true,
+    //     useFindAndModify: false,
+    //     useCreateIndex: true,
+    //     useUnifiedTopology: true,
+    //   }),
+    //   inject: [ConfigService],
+    // }),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
       useFactory: async (configService: ConfigService) => ({

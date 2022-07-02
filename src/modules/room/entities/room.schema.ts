@@ -24,6 +24,9 @@ export class Room extends Document {
   userInRoom: UserInRoomType[];
 
   @Prop()
+  theme: string;
+
+  @Prop()
   createdAt: Date;
 
   @Prop()
