@@ -11,7 +11,20 @@ export class OtpService {
     return this.repository.createOtp(identification, code);
   }
 
-  async getLastestOtp(identification: string): Promise<Otp> {
+  async getLatestOtp(identification: string): Promise<Otp> {
     return this.repository.getLatestOtp(identification);
+  }
+
+  async verifyOtp(identification: string, code: number): Promise<boolean> {
+    const otp: Otp = await this.getLatestOtp(identification);
+    if (!otp) {
+      return false;
+    } else {
+      if (+otp.code === +code) {
+        return true;
+      } else {
+        return false;
+      }
+    }
   }
 }
