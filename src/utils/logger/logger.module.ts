@@ -10,7 +10,7 @@ import 'winston-daily-rotate-file';
         new winston.transports.Console({ level: 'debug' }),
         new winston.transports.DailyRotateFile({
           dirname: 'logs',
-          filename: 'application-%DATE%.log',
+          filename: 'kaiju-%DATE%.log',
           datePattern: 'DD-MM-YYYY',
           zippedArchive: false,
           level: 'info',

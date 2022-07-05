@@ -1,8 +1,7 @@
+import ResponseDataType from 'src/utils/response/ResponseDataType';
 import { HttpStatus, Injectable } from '@nestjs/common';
-import { NOT_FOUND, SUCCESS } from 'src/constants';
+import { NOT_FOUND, ResponseHttpType, SUCCESS } from 'src/constants';
 import { BaseService } from 'src/utils/repository/base.service';
-import { DeleteResult } from 'typeorm';
-import { EntityId } from 'typeorm/repository/EntityId';
 import { Role } from './entities/role.entity';
 import { RoleRepository } from './repository/role.repository';
 
@@ -12,26 +11,22 @@ export class RoleService extends BaseService<Role, RoleRepository> {
     super(repository);
   }
 
-  async create(data) {
+  async create(data): Promise<ResponseHttpType<Role>> {
     await this.repository.save(data);
-    return { data: data, message: SUCCESS, statusCode: HttpStatus.OK };
+    return new ResponseDataType(HttpStatus.OK, data, SUCCESS).toJSON();
   }
 
-  async updateRole(id, data) {
-    const exist = await this.repository.findOne(id);
+  async updateRole(id: number, data: any): Promise<ResponseHttpType<Role>> {
+    const exist: Role = await this.repository.findOne(id);
     if (!exist) {
-      return {
-        data: null,
-        message: NOT_FOUND,
-        statusCode: HttpStatus.NOT_FOUND,
-      };
+      return new ResponseDataType(
+        HttpStatus.NOT_FOUND,
+        null,
+        NOT_FOUND,
+      ).toJSON();
     } else {
       await this.repository.update(id, data);
-      return {
-        data,
-        message: SUCCESS,
-        statusCode: HttpStatus.OK,
-      };
+      return new ResponseDataType(HttpStatus.OK, data, SUCCESS).toJSON();
     }
   }
 

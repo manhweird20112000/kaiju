@@ -34,8 +34,12 @@ export enum TypeRoom {
   user = 'user',
 }
 
-export interface ResponseHttpType {
-  data: any;
+// export interface DataPaginate<T> {
+//   items: T[];
+// }
+
+export interface ResponseHttpType<T> {
+  data: T | T[] | null;
   message: string;
   statusCode: number;
 }
