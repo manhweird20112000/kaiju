@@ -48,7 +48,7 @@ export class User extends BaseEntity {
   })
   status: Status;
 
-  @Column({ comment: 'Mật khẩu', nullable: false, type: 'varchar' })
+  @Column({ comment: 'Mật khẩu', nullable: true, type: 'varchar' })
   password: string;
 
   @Column({

@@ -56,3 +56,4 @@ export const PASSWORD_FAIL = 'Password fail.';
 export const SUCCESS = 'Successfully.';
 export const PASSWORD_NOT_SAME = 'Passwords are not the same.';
 export const NOT_FOUND = 'Not found.';
+export const VERIFY_FAIL = 'Fail.';

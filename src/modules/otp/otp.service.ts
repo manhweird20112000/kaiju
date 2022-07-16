@@ -7,7 +7,7 @@ export class OtpService {
   constructor(private readonly repository: OtpRepository) {}
 
   async createOtp(identification: string): Promise<Otp> {
-    const code = Math.floor(100000 + Math.random() * 900000);
+    const code: number = Math.floor(100000 + Math.random() * 900000);
     return this.repository.createOtp(identification, code);
   }
 
@@ -15,7 +15,7 @@ export class OtpService {
     return this.repository.getLatestOtp(identification);
   }
 
-  async verifyOtp(identification: string, code: number): Promise<boolean> {
+  async verifyOtp(identification: string, code: string): Promise<boolean> {
     const otp: Otp = await this.getLatestOtp(identification);
     if (!otp) {
       return false;

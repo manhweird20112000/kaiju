@@ -6,6 +6,7 @@ import { AppModule } from './app.module';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.enableCors();
+  app.setGlobalPrefix('api', { exclude: ['admin', 'role'] });
   const config = new DocumentBuilder()
     .setTitle('Kaiju')
     .setDescription('The kaiju API description')
