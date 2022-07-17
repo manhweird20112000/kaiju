@@ -12,16 +12,15 @@ export class MediaService extends BaseService<Media, MediaRepository> {
 
   async sigleFileUpload(data) {
     const { mimetype, filename, size, path, type = 'image' } = data;
-    const ext = mimetype.split('/')[1];
     const payload = {
-      name: filename + '.' + ext,
+      name: filename,
       type,
       size,
       ext: mimetype,
       path,
     };
-    await this.repository.save(payload);
-    return { data: payload, statusCode: HttpStatus.OK, message: SUCCESS };
+    const media: Media = await this.repository.save(payload);
+    return media;
   }
 
   async findMedia(id: number) {

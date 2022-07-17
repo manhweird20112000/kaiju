@@ -13,9 +13,12 @@ import Helper from 'src/utils/helper/Helper';
 import { BaseService } from 'src/utils/repository/base.service';
 import ResponseDataType from 'src/utils/response/ResponseDataType';
 import { AuthService } from '../auth/auth.service';
+import { Media } from '../media/entities/media.entity';
+import { MediaService } from '../media/media.service';
 import { Otp } from '../otp/entities/otp.schema';
 import { OtpService } from '../otp/otp.service';
 import { CreateUserDto } from './dto/create-user.dto';
+import { LocationDto } from './dto/location.dto';
 import { LoginDto } from './dto/login.dto';
 import { VerifyOtpDto } from './dto/verify-otp-dto';
 import { User } from './entities/user.entity';
@@ -27,6 +30,7 @@ export class UserService extends BaseService<User, UserRepository> {
     repository: UserRepository,
     private readonly authService: AuthService,
     private readonly otpService: OtpService,
+    private readonly mediaService: MediaService,
   ) {
     super(repository);
   }
@@ -130,5 +134,20 @@ export class UserService extends BaseService<User, UserRepository> {
     }
   }
 
-  
+  async updateAvatar(
+    user: User,
+    file: Express.Multer.File,
+  ): Promise<ResponseHttpType<Media>> {
+    const media: Media = await this.mediaService.sigleFileUpload(file);
+    await this.repository.updateAvatar(user.id, media.id);
+    return new ResponseDataType(HttpStatus.OK, media, SUCCESS).toJSON();
+  }
+
+  async updateLocation(
+    user: User,
+    data: LocationDto,
+  ): Promise<ResponseHttpType<any>> {
+    await this.repository.updateDataAssign(user.id, data);
+    return new ResponseDataType(HttpStatus.OK, data, SUCCESS).toJSON();
+  }
 }

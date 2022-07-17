@@ -74,6 +74,12 @@ export class User extends BaseEntity {
   @Column({ comment: 'Token firebase', nullable: true })
   token: string;
 
+  @Column({ type: 'double', comment: 'Lat', nullable: true })
+  lat: number;
+
+  @Column({ type: 'double', comment: 'Lon', nullable: true })
+  lon: number;
+
   @Column({ comment: 'Lần đăng nhập gần nhất', nullable: true })
   lastLoginAt: Date;
 

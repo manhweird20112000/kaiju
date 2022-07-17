@@ -27,4 +27,20 @@ export class UserRepository extends Repository<User> {
       .set({ status: type })
       .execute();
   }
+
+  updateAvatar(userId: number, mediaId: any): Promise<UpdateResult> {
+    return this.createQueryBuilder()
+      .where('id = :userId', { userId })
+      .update(User)
+      .set({ avatar: mediaId })
+      .execute();
+  }
+
+  updateDataAssign(userId: number, payload: any): Promise<UpdateResult> {
+    return this.createQueryBuilder()
+      .where('id = :userId', { userId })
+      .update(User)
+      .set(payload)
+      .execute();
+  }
 }
