@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Get,
   HttpException,
   HttpStatus,
   Param,
@@ -56,6 +57,23 @@ export class InvitationController {
         await this.invitationService.setRequestYou(id, updateInvitationDto);
       return res.status(HttpStatus.OK).json({ ...data });
     } catch (error) {
+      throw new HttpException(
+        'Internal Server Error.',
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get('/list-friend-request')
+  async getListFriendRequest(@Res() res: Response, @Req() req: Request) {
+    try {
+      const user: any = req.user;
+      const data: ResponseHttpType<Invitation> =
+        await this.invitationService.getFriendRequest(user);
+      return res.status(HttpStatus.OK).json({ ...data });
+    } catch (error) {
+      console.log(error);
       throw new HttpException(
         'Internal Server Error.',
         HttpStatus.INTERNAL_SERVER_ERROR,

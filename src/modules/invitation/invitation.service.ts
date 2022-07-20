@@ -40,4 +40,16 @@ export class InvitationService extends BaseService<
     });
     return new ResponseDataType(HttpStatus.OK, null, SUCCESS).toJSON();
   }
+
+  async getFriendRequest(user: User): Promise<ResponseHttpType<Invitation>> {
+    const listFriendRequest: Invitation[] = await this.repository.friendRequest(
+      user.id,
+    );
+
+    return new ResponseDataType(
+      HttpStatus.OK,
+      listFriendRequest,
+      SUCCESS,
+    ).toJSON();
+  }
 }

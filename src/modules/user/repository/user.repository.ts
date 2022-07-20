@@ -14,7 +14,7 @@ export class UserRepository extends Repository<User> {
       .addSelect('gender')
       .addSelect('birthday')
       .addSelect('typeAuth')
-      .where('concat(email, phone) = :search', {
+      .where('concat(email, phone) like :search', {
         search: search,
       })
       .getRawOne();

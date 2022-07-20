@@ -103,6 +103,7 @@ export class UserService extends BaseService<User, UserRepository> {
   async login(loginDto: LoginDto): Promise<ResponseHttpType<User>> {
     const { identification, password } = loginDto;
     const exist: User = await this.repository.findUser(identification);
+    console.log(exist);
     if (!exist) {
       return new ResponseDataType(
         HttpStatus.NOT_FOUND,

@@ -7,6 +7,7 @@ import { Role } from 'src/modules/role/entities/role.entity';
 import { User } from 'src/modules/user/entities/user.entity';
 import { MongooseModule } from '@nestjs/mongoose';
 import { Invitation } from 'src/modules/invitation/entities/invitation.entity';
+import { Config } from 'src/modules/config/entities/config.entity';
 
 @Module({
   imports: [
@@ -35,7 +36,7 @@ import { Invitation } from 'src/modules/invitation/entities/invitation.entity';
         username: configService.get('DB_USER'),
         password: configService.get('DB_PASSWORD'),
         database: configService.get('DB_NAME'),
-        entities: [Media, Admin, Role, User, Invitation],
+        entities: [Media, Admin, Role, User, Invitation, Config],
         synchronize: configService.get('DB_ASYNC'),
       }),
       inject: [ConfigService],

@@ -29,6 +29,11 @@ export enum TypeRequest {
   request = 'request',
 }
 
+export enum TypeConfig {
+  template = 'template',
+  normal = 'normal',
+}
+
 export enum TypeRoom {
   group = 'group',
   user = 'user',
