@@ -12,6 +12,8 @@ import { DatabaseModule } from './configs/database/database.module';
 import { UserHttpModule } from './modules/user/user-http.module';
 import { InvitationHttpModule } from './modules/invitation/invitation-http.module';
 import { OtpHttpModule } from './modules/otp/otp-http.module';
+import { RoomHttpModule } from './modules/room/room-http.module';
+import { MessageHttpModule } from './modules/message/message-http.module';
 
 @Module({
   imports: [
@@ -26,6 +28,8 @@ import { OtpHttpModule } from './modules/otp/otp-http.module';
     UserHttpModule,
     InvitationHttpModule,
     OtpHttpModule,
+    RoomHttpModule,
+    MessageHttpModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -1,34 +1,53 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
-import { MessageService } from './message.service';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  Res,
+  Req,
+  Inject,
+  Logger,
+  HttpStatus,
+  HttpException,
+  UseGuards,
+} from '@nestjs/common';
+import { Request, Response } from 'express';
+import { WINSTON_MODULE_PROVIDER } from 'nest-winston';
+import { ResponseHttpType } from 'src/constants';
+import { ValidationPipe } from 'src/utils/validation/validation.service';
+import { JwtAuthGuard } from '../auth/guards/jwt.guard';
 import { CreateMessageDto } from './dto/create-message.dto';
-import { UpdateMessageDto } from './dto/update-message.dto';
+import { Message } from './entities/message.schema';
+import { MessageService } from './message.service';
 
 @Controller('message')
 export class MessageController {
-  constructor(private readonly messageService: MessageService) {}
+  constructor(
+    private readonly messageService: MessageService,
+    @Inject(WINSTON_MODULE_PROVIDER) private readonly logger: Logger,
+  ) {}
 
-  @Post()
-  create(@Body() createMessageDto: CreateMessageDto) {
-    return this.messageService.create(createMessageDto);
-  }
-
-  @Get()
-  findAll() {
-    return this.messageService.findAll();
-  }
-
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.messageService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateMessageDto: UpdateMessageDto) {
-    return this.messageService.update(+id, updateMessageDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.messageService.remove(+id);
+  @UseGuards(JwtAuthGuard)
+  @Post('/send')
+  async send(
+    @Res() res: Response,
+    @Req() req: Request,
+    @Body(new ValidationPipe()) createMessageDto: CreateMessageDto,
+  ) {
+    try {
+      const user: any = req.user;
+      const data: ResponseHttpType<Message> =
+        await this.messageService.sendMessage(createMessageDto, user);
+      return res.status(HttpStatus.OK).json({ ...data });
+    } catch (error) {
+      this.logger.error(error);
+      return new HttpException(
+        'Internal Server Error.',
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
   }
 }

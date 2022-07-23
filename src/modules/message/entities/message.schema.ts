@@ -1,5 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import * as mongoose from 'mongoose';
+import { Document, Schema as SchemaMongoose } from 'mongoose';
 import { TypeMedia, UserInRoomType } from 'src/constants';
 import { Room } from 'src/modules/room/entities/room.schema';
 
@@ -7,16 +7,16 @@ export type MessageDocument = Message & Document;
 
 @Schema({ timestamps: { createdAt: 'createdAt', updatedAt: 'updateAt' } })
 export class Message extends Document {
-  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Room' })
+  @Prop({ type: SchemaMongoose.Types.ObjectId, ref: 'Room' })
   roomId: Room;
 
   @Prop()
-  listUserRead: UserInRoomType[];
+  listUserRead: number[];
 
   @Prop()
   content: string;
 
-  @Prop({ type: 'enum', enum: TypeMedia, default: TypeMedia.text })
+  @Prop({ type: String, enum: TypeMedia, default: TypeMedia.text })
   type: TypeMedia;
 
   @Prop()

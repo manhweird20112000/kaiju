@@ -39,6 +39,10 @@ export enum TypeRoom {
   user = 'user',
 }
 
+export enum MessageColor {
+  default = '#5800FF',
+}
+
 // export interface DataPaginate<T> {
 //   items: T[];
 // }

@@ -36,7 +36,7 @@ import { Config } from 'src/modules/config/entities/config.entity';
         username: configService.get('DB_USER'),
         password: configService.get('DB_PASSWORD'),
         database: configService.get('DB_NAME'),
-        entities: [Media, Admin, Role, User, Invitation, Config],
+        entities: [Media, Admin, Role, User, Invitation],
         synchronize: configService.get('DB_ASYNC'),
       }),
       inject: [ConfigService],

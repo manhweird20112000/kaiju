@@ -20,7 +20,6 @@ import { WINSTON_MODULE_PROVIDER } from 'nest-winston';
 import * as path from 'path';
 import { ResponseHttpType } from 'src/constants';
 import { ValidationPipe } from 'src/utils/validation/validation.service';
-import { Transaction } from 'typeorm';
 import { v4 } from 'uuid';
 import { JwtAuthGuard } from '../auth/guards/jwt.guard';
 import { Media } from '../media/entities/media.entity';

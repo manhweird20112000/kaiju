@@ -1,5 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { TypeRoom, UserInRoomType } from 'src/constants';
+import { Document } from 'mongoose';
+import { MessageColor, TypeRoom, UserInRoomType } from 'src/constants';
 
 export type RoomDocument = Room & Document;
 
@@ -8,11 +9,8 @@ export class Room extends Document {
   @Prop()
   name: string;
 
-  @Prop()
+  @Prop({ enum: MessageColor, default: MessageColor.default })
   color: string;
-
-  @Prop()
-  ownerId: number;
 
   @Prop({ enum: TypeRoom, default: TypeRoom.user })
   roomType: TypeRoom;

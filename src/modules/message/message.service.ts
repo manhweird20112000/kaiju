@@ -1,26 +1,26 @@
-import { Injectable } from '@nestjs/common';
+import { HttpStatus, Injectable } from '@nestjs/common';
+import { ResponseHttpType, SUCCESS } from 'src/constants';
+import ResponseDataType from 'src/utils/response/ResponseDataType';
+import { RoomService } from '../room/room.service';
+import { User } from '../user/entities/user.entity';
 import { CreateMessageDto } from './dto/create-message.dto';
 import { UpdateMessageDto } from './dto/update-message.dto';
+import { Message } from './entities/message.schema';
+import { MessageRepository } from './repository/message.repository';
 
 @Injectable()
 export class MessageService {
-  create(createMessageDto: CreateMessageDto) {
-    return 'This action adds a new message';
-  }
+  constructor(private readonly repository: MessageRepository) {}
 
-  findAll() {
-    return `This action returns all message`;
-  }
-
-  findOne(id: number) {
-    return `This action returns a #${id} message`;
-  }
-
-  update(id: number, updateMessageDto: UpdateMessageDto) {
-    return `This action updates a #${id} message`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} message`;
+  async sendMessage(
+    createMessageDto: CreateMessageDto,
+    user: User,
+  ): Promise<ResponseHttpType<Message>> {
+    const payload = {
+      ...createMessageDto,
+      listUserRead: [user.id],
+    };
+    const message: Message = await this.repository.save(payload);
+    return new ResponseDataType(HttpStatus.OK, message, SUCCESS).toJSON();
   }
 }
