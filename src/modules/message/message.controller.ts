@@ -50,4 +50,25 @@ export class MessageController {
       );
     }
   }
+
+  @UseGuards(JwtAuthGuard)
+  @Patch('/read/:id')
+  async read(
+    @Res() res: Response,
+    @Req() req: Request,
+    @Param('id') id: string,
+  ) {
+    try {
+      const user: any = req.user;
+      const data: ResponseHttpType<Message> =
+        await this.messageService.readMessage(id, user);
+      return res.status(HttpStatus.OK).json({ ...data });
+    } catch (error) {
+      this.logger.error(error);
+      return new HttpException(
+        'Internal Server Error.',
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
+  }
 }

@@ -23,4 +23,12 @@ export class MessageService {
     const message: Message = await this.repository.save(payload);
     return new ResponseDataType(HttpStatus.OK, message, SUCCESS).toJSON();
   }
+
+  async readMessage(
+    roomId: string,
+    user: User,
+  ): Promise<ResponseHttpType<Message>> {
+    const message = await this.repository.read(roomId, user.id);
+    return new ResponseDataType(HttpStatus.OK, message, SUCCESS).toJSON();
+  }
 }

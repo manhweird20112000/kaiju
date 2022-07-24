@@ -14,4 +14,15 @@ export class MessageRepository {
     const message = new this.messageModel(data);
     return message.save();
   }
+
+  async read(roomId: string, userReadId: number): Promise<any> {
+    return this.messageModel
+      .updateMany(
+        { roomId: roomId, listUserRead: { $nin: [userReadId] } },
+        {
+          $addToSet: { listUserRead: userReadId },
+        },
+      )
+      .exec();
+  }
 }

@@ -1,5 +1,5 @@
 import { TypeMedia } from 'src/constants';
-import { IsEnum, IsNotEmpty, IsString } from 'class-validator';
+import { IsEnum, IsNotEmpty, IsOptional, IsString } from 'class-validator';
 
 export class CreateMessageDto {
   @IsNotEmpty()
@@ -13,4 +13,7 @@ export class CreateMessageDto {
   @IsNotEmpty()
   @IsEnum(TypeMedia, { each: true })
   type: TypeMedia;
+
+  @IsOptional()
+  messageId: string;
 }

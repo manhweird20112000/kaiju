@@ -125,6 +125,7 @@ export class UserService extends BaseService<User, UserRepository> {
         delete exist.password;
         const payload = {
           id: exist.id,
+          fullname: exist.fullname,
           typeAuth: exist.typeAuth,
           birthday: exist.birthday,
         };

@@ -1,6 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Schema as SchemaMongoose } from 'mongoose';
-import { TypeMedia, UserInRoomType } from 'src/constants';
+import { TypeMedia } from 'src/constants';
 import { Room } from 'src/modules/room/entities/room.schema';
 
 export type MessageDocument = Message & Document;
@@ -9,6 +9,9 @@ export type MessageDocument = Message & Document;
 export class Message extends Document {
   @Prop({ type: SchemaMongoose.Types.ObjectId, ref: 'Room' })
   roomId: Room;
+
+  @Prop({ type: SchemaMongoose.Types.ObjectId, ref: 'Message', default: null })
+  messageId: Message;
 
   @Prop()
   listUserRead: number[];
