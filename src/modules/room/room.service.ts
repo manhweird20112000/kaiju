@@ -15,20 +15,30 @@ export class RoomService {
     user: User,
   ): Promise<ResponseHttpType<Room>> {
     const { roomType, userId } = data;
-    const payload = {
-      roomType: roomType,
-      userInRoom: [
-        {
-          id: user.id,
-          nickname: null,
-        },
-        {
-          id: userId,
-          nickname: null,
-        },
-      ],
-    };
-    const room = await this.repository.createRoom(payload);
-    return new ResponseDataType(HttpStatus.OK, room, SUCCESS).toJSON();
+    const exist: Room = await this.repository.existRoom(user.id, userId);
+    if (exist) {
+      return new ResponseDataType(
+        HttpStatus.MOVED_PERMANENTLY,
+        exist,
+        SUCCESS,
+      ).toJSON();
+    } else {
+      const payload = {
+        roomType: roomType,
+        userInRoom: [
+          {
+            id: user.id,
+            nickname: null,
+          },
+          {
+            id: userId,
+            nickname: null,
+          },
+        ],
+      };
+
+      const room = await this.repository.createRoom(payload);
+      return new ResponseDataType(HttpStatus.OK, room, SUCCESS).toJSON();
+    }
   }
 }

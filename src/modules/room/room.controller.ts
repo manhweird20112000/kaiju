@@ -45,7 +45,6 @@ export class RoomController {
       return res.status(HttpStatus.OK).json({ ...data });
     } catch (error) {
       this.logger.error(error);
-      console.log(error);
       return new HttpException(
         'Internal Server Error',
         HttpStatus.INTERNAL_SERVER_ERROR,

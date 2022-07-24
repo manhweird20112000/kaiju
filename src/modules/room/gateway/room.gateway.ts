@@ -1,4 +1,4 @@
-import { Inject, Logger } from '@nestjs/common';
+import { Inject, Logger, UseGuards } from '@nestjs/common';
 import {
   OnGatewayConnection,
   OnGatewayDisconnect,
@@ -9,30 +9,30 @@ import {
 } from '@nestjs/websockets';
 import { WINSTON_MODULE_PROVIDER } from 'nest-winston';
 import { Server } from 'socket.io';
+import { JwtAuthGuard } from 'src/modules/auth/guards/jwt.guard';
 
 @WebSocketGateway({ cors: { origin: '*' } })
-export class SocketGateway
+export class RoomGateWay
   implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect
 {
   @WebSocketServer() server: Server;
 
   constructor(
-    @Inject(WINSTON_MODULE_PROVIDER)
-    private readonly logger: Logger,
+    @Inject(WINSTON_MODULE_PROVIDER) private readonly logger: Logger,
   ) {}
 
   handleDisconnect(client: any) {
-    console.log('client dissconnect');
-  }
-  afterInit(server: any) {
-    console.log('Socket has been initialized.');
+    console.log('đã disconnect');
   }
   handleConnection(client: any, ...args: any[]) {
-    console.log('connection');
+    console.log('đang connect');
+  }
+  afterInit(server: any) {
+    console.log('Sau khi init socket');
   }
 
-  @SubscribeMessage('hsweird')
-  emit() {
-    this.server.sockets.emit('hsweird', { message: 'hello' });
+  @SubscribeMessage('connection')
+  async emitConnection() {
+    this.server.emit('connection', true);
   }
 }
